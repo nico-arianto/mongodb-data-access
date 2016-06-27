@@ -64,7 +64,7 @@ public abstract class AbstractCodec<T> implements Codec<T> {
         final PropertyDescriptor[] descriptors = collectionInfo.getPropertyDescriptors();
         this.collectionDescriptors = new HashMap<>(descriptors.length);
         for (PropertyDescriptor descriptor : descriptors) {
-            if (Objects.isNull(descriptor.getWriteMethod()) && Objects.isNull(descriptor.getReadMethod())) {
+            if (Objects.isNull(descriptor.getWriteMethod()) || Objects.isNull(descriptor.getReadMethod())) {
                 continue;
             }
             collectionDescriptors.put(descriptor.getName(), descriptor);

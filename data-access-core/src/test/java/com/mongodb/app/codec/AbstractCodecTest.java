@@ -43,6 +43,8 @@ public class AbstractCodecTest {
         private Date dateProp;
         private Integer[] arrayProp;
         private List<Long> listProp;
+        private Object setterProp;
+        private Object getterProp;
 
         /**
          * Returns string property.
@@ -186,6 +188,24 @@ public class AbstractCodecTest {
          */
         public void setListProp(List<Long> listProp) {
             this.listProp = listProp;
+        }
+
+        /**
+         * Sets setter property.
+         *
+         * @param setterProp setter property
+         */
+        public void setSetterProp(Object setterProp) {
+            this.setterProp = setterProp;
+        }
+
+        /**
+         * Returns getter property.
+         *
+         * @return getter property
+         */
+        public Object getGetterProp() {
+            return getterProp;
         }
 
         @Override
@@ -333,5 +353,14 @@ public class AbstractCodecTest {
         final BeanTest actualBean = codec.decode(new JsonReader(document.toJson()), DecoderContext.builder().build());
         assertNotNull(actualBean);
         assertEquals(expectedBean, actualBean);
+    }
+
+    /**
+     * Test AbstractCodec({@link CodecRegistry}, Class) constructor throw {@link CodecConfigurationException}.
+     */
+    @Test(expectedExceptions = CodecConfigurationException.class)
+    public void testConstructorThrowCodecConfigurationException() {
+        new AbstractCodec<List>(MongoClient.getDefaultCodecRegistry(), List.class) {
+        };
     }
 }
