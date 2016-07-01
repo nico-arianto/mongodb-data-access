@@ -249,9 +249,6 @@ public abstract class AbstractCodec<T> implements Codec<T> {
      * @param <S>            element class
      */
     private <S> void writeElement(final BsonWriter writer, final S elementValue, final EncoderContext encoderContext) {
-        if (elementValue == null) {
-            return;
-        }
         Class<?> elementType = elementValue.getClass();
         if (elementType.isArray()) {
             writer.writeStartArray();
@@ -290,6 +287,9 @@ public abstract class AbstractCodec<T> implements Codec<T> {
                 elementValue = descriptor.getReadMethod().invoke(source);
             } catch (ReflectiveOperationException exception) {
                 LOGGER.error("Failed to read the target property [" + attributeName + "]!", exception);
+                continue;
+            }
+            if (elementValue == null) {
                 continue;
             }
             final String elementName = getBSONElementName(attributeName);
