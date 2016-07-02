@@ -315,8 +315,8 @@ public class AbstractCodecTest {
          *
          * @return string property
          */
-        public String getStringProp() {
-            return stringProp;
+        public String getStringProp() throws IllegalAccessException {
+            throw new IllegalAccessException();
         }
 
         /**
@@ -491,12 +491,12 @@ public class AbstractCodecTest {
      */
     @Test
     public void testDecodeWithProtectedSetter() {
-        final AbstractCodec<BeanProtectedTest> queueCodec = new AbstractCodec<BeanProtectedTest>(MongoClient.getDefaultCodecRegistry(), BeanProtectedTest.class) {
+        final AbstractCodec<BeanProtectedTest> protectedCodec = new AbstractCodec<BeanProtectedTest>(MongoClient.getDefaultCodecRegistry(), BeanProtectedTest.class) {
         };
         final Document document = new Document();
         document.append("stringProp", stringProp);
         final BeanProtectedTest expectedBean = new BeanProtectedTest();
-        final BeanProtectedTest actualBean = queueCodec.decode(new JsonReader(document.toJson()), DecoderContext.builder().build());
+        final BeanProtectedTest actualBean = protectedCodec.decode(new JsonReader(document.toJson()), DecoderContext.builder().build());
         assertNotNull(actualBean);
         assertEquals(expectedBean, actualBean);
     }
@@ -538,6 +538,28 @@ public class AbstractCodecTest {
         final BeanTest actualBean = codec.decode(new JsonReader(actualJSON), DecoderContext.builder().build());
         assertNotNull(actualBean);
         assertEquals(inputBean, actualBean);
+    }
+
+    /**
+     * Test encode({@link BsonWriter}, T, {@link EncoderContext}) method with protected getter.
+     */
+    @Test
+    public void testEncodeWithProtectedGetter() {
+        final AbstractCodec<BeanProtectedTest> protectedCodec = new AbstractCodec<BeanProtectedTest>(MongoClient.getDefaultCodecRegistry(), BeanProtectedTest.class) {
+        };
+        final StringWriter writer = new StringWriter();
+        final Document document = new Document();
+        final BeanProtectedTest inputBean = new BeanProtectedTest();
+        protectedCodec.encode(new JsonWriter(writer), inputBean, EncoderContext.builder().build());
+        assertEquals(document.toJson(), writer.toString());
+    }
+
+    /**
+     * Test getEncoderClass() method.
+     */
+    @Test
+    public void testGetEncoderClass() {
+        assertEquals(BeanTest.class, codec.getEncoderClass());
     }
 
     /**
