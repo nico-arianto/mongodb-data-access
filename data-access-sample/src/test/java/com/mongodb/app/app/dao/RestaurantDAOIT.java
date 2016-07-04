@@ -18,12 +18,12 @@ import java.util.List;
 import static org.testng.AssertJUnit.*;
 
 /**
- * Restaurant DAO - unit test.
+ * Restaurant DAO - integration test.
  *
  * @author nico.arianto
  */
-public class RestaurantDAOTest {
-    private static final Logger LOGGER = LoggerFactory.getLogger(RestaurantDAOTest.class);
+public class RestaurantDAOIT {
+    private static final Logger LOGGER = LoggerFactory.getLogger(RestaurantDAOIT.class);
     private RestaurantDAO restaurantDAO;
     private Restaurant restaurant;
 

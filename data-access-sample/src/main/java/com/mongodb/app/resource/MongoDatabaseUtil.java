@@ -19,7 +19,7 @@ import java.util.Properties;
  *
  * @author nico.arianto
  */
-public class MongoDatabaseUtil {
+public final class MongoDatabaseUtil {
     private static final String PROPERTIES_FILE = "mongodb.properties";
     private static final String CLIENT_URI = "clientURI";
     private static final String DATABASE = "database";
@@ -54,5 +54,11 @@ public class MongoDatabaseUtil {
                 new MongoClientOptions.Builder().codecRegistry(getCodecRegistry()));
         final MongoClient client = new MongoClient(clientURI);
         return client.getDatabase(properties.getProperty(DATABASE));
+    }
+
+    /**
+     * Private constructor.
+     */
+    private MongoDatabaseUtil() {
     }
 }
