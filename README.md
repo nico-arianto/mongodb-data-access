@@ -31,11 +31,11 @@ MongoDB Java Driver extender to support a Java Bean as an Object Model that over
  * TestNG, JMockit, and Maven Surefire and Failsafe plugins was used to do an unit test (*Test.java) and integration test (*IT.java).
  * JaCoCo been used to do an unit test and integration testing coverage reports.
 
-# Improvement
+## Improvement
 
  * Use an Embedded MongoDB for integration testing.
 
-# References
+## References
 
  * [MongoDB Documentation - MongoDB Drivers - Java Driver] (https://docs.mongodb.com/ecosystem/drivers/java/)
  * [MongoDB Java Driver Documentation] (http://mongodb.github.io/mongo-java-driver/)
